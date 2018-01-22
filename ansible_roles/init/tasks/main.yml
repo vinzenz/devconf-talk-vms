@@ -1,0 +1,32 @@
+- name: Update Yum
+  yum:
+    name: '*'
+    state: latest
+
+- name: Install nano, git, etc
+  yum:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+     - git
+     - nano
+     - curl
+     - gcc
+     - kernel-devel
+     - wget
+     - vim
+     - man
+     - unzip
+     - ansible
+     - libselinux-python
+
+- name: Add the predefined SSH key
+  authorized_key:
+    user: '{{ item }}'
+    state: present
+    key: "{{ lookup('file', '{{ key_path }}') }}"
+  with_items:
+    - vagrant
+    - root
+- name: Ensure eth1 is up too
+  shell: ifup eth1 up

@@ -1,0 +1,8 @@
+- hosts: all
+  vars:
+    wp_db_host: 192.168.50.5
+  roles:
+    - role: init
+      key_path: /home/vfeenstr/.ssh/id_rsa.pub
+    - httpd
+    - wordpress
